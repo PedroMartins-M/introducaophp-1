@@ -3,6 +3,17 @@
 //recebe o cep do formulário
 $cep = $_POST["cep"];
 
+$cep = $_POST['cep'];
+
+// Verifica se possui apenas números
+if (!preg_match('/^[0-9]+$/', $cep)) {
+
+    echo "Erro: O CEP deve conter apenas números. <br><br>";
+    echo "<a href='03_consultacep.html'><button>Ir para a página inicial</button></a>";
+    exit;
+
+}
+
 //url da api
 $url = "https://viacep.com.br/ws/$cep/json/";
 
@@ -15,6 +26,7 @@ $response = curl_exec($cURL);
 curl_close($cURL);
 
 $cep = json_decode($response);
+
 
 if (isset($cep->erro)) 
 {
@@ -33,5 +45,10 @@ if (isset($cep->erro))
     echo "ibge: $cep->ibge <br>";
     echo "GIA: $cep->gia <br>";
     echo "DDD: $cep->ddd <br>";
-    echo "Siafi: $cep->siafi <br>";
+    echo "Siafi: $cep->siafi <br><br>";
+
+    echo "<a href='03_consultacep.html'><button> Voltar</button></button></a>";
 }
+
+
+?>
